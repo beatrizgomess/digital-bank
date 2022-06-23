@@ -3,16 +3,36 @@ import java.util.Scanner;
 
 public class Conta {
     Scanner scan = new Scanner(System.in);
+    final double VALUE_LIMIT_SPECIAL = 500;
+
     private int accountNumber;
     private TypeAccounts type;
     private int agency;
     protected double balance;
     private Cliente cliente;
     private boolean isSpecial;
-    private LimitSpecial limitSpecial;
-    private LimitSpecial withdraw;
+    private double withdraw;
+    double debt;
+    double limitValue = VALUE_LIMIT_SPECIAL;
 
 
+    public Conta() {}
+
+    public Conta(int accountNumber, TypeAccounts type, int agency,
+                 double balance, Cliente cliente, boolean isSpecial,
+                 double withdraw) {
+        this.accountNumber = accountNumber;
+        this.type = type;
+        this.agency = agency;
+        this.balance = balance;
+        this.cliente = cliente;
+        this.isSpecial = isSpecial;
+        this.withdraw = withdraw;
+    }
+
+    public double getVALUE_LIMIT_SPECIAL() {
+        return VALUE_LIMIT_SPECIAL;
+    }
 
     public int getAccountNumber() {
         return accountNumber;
@@ -38,20 +58,20 @@ public class Conta {
         this.agency = agency;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public double getBalance() {
         return balance;
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public boolean isSpecial() {
@@ -62,64 +82,27 @@ public class Conta {
         isSpecial = special;
     }
 
-
-
-    public void cashDeposit(double value){
-        if(value > 0){
-            this.balance += value;
-        }else{
-            new RuntimeException();
-            System.out.println("deposit amount denied");
-        }
+    public double getWithdraw() {
+        return withdraw;
     }
 
-    void consultBalance(){
-        System.out.println("Your balance is: R$: " + getBalance());
+    public void setWithdraw(double withdraw) {
+        this.withdraw = withdraw;
     }
 
-    void consultSpecialAccount(){
-        if(type == type.CHECKING_ACCOUNT){
-            if(isSpecial){
-                this.limitSpecial = LimitSpecial.VALUE_LIMIT_SPECIAL;
-                System.out.println("your account has a special limit on the amount + " + this.limitSpecial);
-            }else{
-                System.out.println("the special limit on your account is not authorized.");
-            }
-        }else{
-            System.out.println("your account does not meet the special limit requirements");
-        }
+    public double getDebt() {
+        return debt;
     }
 
-    void withdrawspeci(){
-        consultSpecialAccount();
-        double rate = 0.14;
-        System.out.println("you will withdraw from your special limit, suffering a jurps fee");
-        System.out.println("has " + rate*100 + " interest");
-        //LimitSpecial.VALUE_LIMIT_SPECIAL -= withdraw;
-        //double debt = withdraw * rate;
-        //toPay = money + taxa;
+    public void setDebt(double debt) {
+        this.debt = debt;
     }
 
-    public void getMoney(double value){
-        consultBalance();
-        System.out.println("how much do you want to withdraw? ");
-        double money = scan.nextDouble();
-        if(this.balance > 0 && this.balance <= value){
-            balance -= money;
-            System.out.println("successful withdrawal amount");
-        }else{
-            if(this.balance > value){
-                if(isSpecial){
-                    //if(value > LimitSpecial()){
-                        //System.out.println("Unavailable Amount");
-                    //}else{
+    public double getLimitValue() {
+        return limitValue;
+    }
 
-                    }
-                }
-            }
-        }
-
-    public void transferir(double valor, int accountNumber){
-
+    public void setLimitValue(double limitValue) {
+        this.limitValue = limitValue;
     }
 }
